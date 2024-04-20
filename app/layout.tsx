@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,13 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-primary font-mont text-text p-8">
       <body className={inter.className}>
+        <Header />
         {children}
-        <footer className="fixed bottom-4 right-4 bg-white bg-opacity-30 rounded-lg shadow-md p-4">
-          <p className="text-sm font-semibold">
-            Data © <a href="http://osm.org/copyright">OpenStreetMap</a>{" "}
-            contributors, ODbL 1.0.
-          </p>
-        </footer>
+        <Footer />
       </body>
     </html>
   );

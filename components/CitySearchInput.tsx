@@ -1,8 +1,9 @@
-import onFetchCityLatLong from "@/common/CityLatLong";
+import cities from "@/common/Cities.json";
 import { CityList } from "@/common/Interfaces";
 import { RiSearchLine } from "@remixicon/react";
 import { Icon } from "@tremor/react";
-import React, { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
 
 type Props = {
   onSearch: (city: string) => void;
@@ -10,13 +11,17 @@ type Props = {
 
 export default function CitySearchInput({ onSearch }: Props) {
   const [city, setCity] = useState<string>(""),
+    pathname = usePathname().slice(1),
     [cityNameList, setCityListName] = useState<CityList[]>([]),
     inputRef = useRef<HTMLInputElement>(null),
+    formRef = useRef<HTMLFormElement>(null),
     [isInputActive, setInputActive] = useState<boolean>(false),
     onCityInputChange = (uiEvent: React.ChangeEvent<HTMLInputElement>) => {
       const value = uiEvent.target.value;
       setCity(value);
-      onFetchCityLatLong(value).then(setCityListName);
+      setCityListName(
+        cities.filter(({ name = "" }) => name.includes(value)).slice(0, 5)
+      );
     },
     onCityLabelFocus = () => {
       const { current } = inputRef;
@@ -28,14 +33,46 @@ export default function CitySearchInput({ onSearch }: Props) {
     onCityInputBlur = () => {
       if (city.trim() === "") setInputActive(false);
     },
-    onCityOptionSelect = () => {},
     onFormSubmit = (uiEvent: React.FormEvent<HTMLFormElement>) => {
       uiEvent.preventDefault();
-      if (city.trim() !== "") onSearch(city);
+      if (city.trim() !== "") {
+        onSearch(city);
+        setCityListName([]);
+      }
+    },
+    onOptionTab = (event: React.KeyboardEvent<HTMLDivElement>) => {
+      const {
+          key,
+          currentTarget: { innerHTML },
+        } = event,
+        { current } = formRef;
+      if (key === "Enter" && innerHTML !== "") {
+        setCity(innerHTML);
+        setCityListName([...[]]);
+        inputRef.current?.focus();
+      }
+    },
+    onOptionClick = (event: React.MouseEvent<HTMLDivElement>) => {
+      const {
+          currentTarget: { innerHTML },
+        } = event,
+        { current } = formRef;
+      if (innerHTML !== "") {
+        setCity(innerHTML);
+        setCityListName([...[]]);
+        inputRef.current?.focus();
+      }
     };
 
+  useEffect(() => {
+    if (pathname) {
+      setCity(decodeURIComponent(pathname));
+      inputRef.current?.focus();
+    }
+  }, [pathname]);
+
   return (
-    <form onSubmit={onFormSubmit} className="relative lg:w-1/3">
+    <form ref={formRef} onSubmit={onFormSubmit} className="relative lg:w-1/3">
       <label
         onClick={onCityLabelFocus}
         htmlFor="city"
@@ -58,13 +95,6 @@ export default function CitySearchInput({ onSearch }: Props) {
           onBlur={onCityInputBlur}
           className="search-input"
         />
-        <datalist id="cityNameList">
-          {cityNameList.map(({ display_name }, idx) => (
-            <option key={idx} value={display_name} onClick={onCityOptionSelect}>
-              {display_name}
-            </option>
-          ))}
-        </datalist>
         <button type="submit" className="ml-2">
           <Icon
             icon={RiSearchLine}
@@ -72,6 +102,20 @@ export default function CitySearchInput({ onSearch }: Props) {
             className="search-icon-btn"
           />
         </button>
+      </div>
+      <div className="absolute z-10 mt-1 w-full bg-white bg-opacity-30 font-semibold rounded-xl shadow-lg">
+        {cityNameList.length > 0 &&
+          cityNameList.map(({ name }, index) => (
+            <div
+              key={index}
+              tabIndex={0}
+              onKeyDown={onOptionTab}
+              onClick={onOptionClick}
+              className="py-3 pl-6 cursor-pointer hover:bg-blue-400 focus:bg-blue-400 focus:outline-none hover:ring-0 rounded-xl"
+            >
+              {name}
+            </div>
+          ))}
       </div>
     </form>
   );
