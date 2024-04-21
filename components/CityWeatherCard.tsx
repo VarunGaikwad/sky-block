@@ -4,7 +4,16 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import moment from "moment-timezone";
 import { CurrentWeather } from "@/common/Interfaces";
-import { FindWeatherIconCodes, WeatherContext } from "@/common/IconDisctonary";
+import { FindWeatherIconCodes, WeatherContext } from "@/common/IconDictionary";
+import { Icon } from "@tremor/react";
+import {
+  RemixiconComponentType,
+  RiArrowDownDoubleFill,
+  RiCloudFill,
+  RiRainyFill,
+  RiWaterPercentFill,
+  RiWindyFill,
+} from "@remixicon/react";
 
 export default function CityWeatherCard({
   info,
@@ -14,7 +23,7 @@ export default function CityWeatherCard({
   const [time, setTime] = useState(""),
     src = FindWeatherIconCodes(
       info?.current.weather_code || 0,
-      info?.current.is_day || 1
+      info?.current.is_day ?? 0
     );
 
   useEffect(() => {
@@ -26,7 +35,7 @@ export default function CityWeatherCard({
   }, [info?.timezone]);
 
   return (
-    <div className="lg:col-span-1 rounded-xl bg-indigo-700 bg-opacity-80 text-white p-5 shadow-2xl">
+    <div className="grid-card bg-indigo-700 bg-opacity-80">
       <p className="font-semibold text-2xl">
         Good Morning, {info?.display_name}
       </p>
@@ -42,6 +51,7 @@ export default function CityWeatherCard({
       </div>
       <div className="flex justify-between px-4 my-2">
         <MicroInfo
+          icon={RiWaterPercentFill}
           value={
             (info?.current.relative_humidity_2m.toString() || "") +
             " " +
@@ -49,13 +59,15 @@ export default function CityWeatherCard({
           }
         />
         <MicroInfo
+          icon={RiRainyFill}
           value={
-            (info?.current.precipitation.toString() || "") +
+            (info?.current.rain.toString() || "") +
             " " +
-            (info?.current_units.precipitation.toString() || "")
+            (info?.current_units.rain.toString() || "")
           }
         />
         <MicroInfo
+          icon={RiWindyFill}
           value={
             (info?.current.wind_speed_10m.toString() || "") +
             " " +
@@ -63,10 +75,11 @@ export default function CityWeatherCard({
           }
         />
         <MicroInfo
+          icon={RiArrowDownDoubleFill}
           value={
-            (info?.current.cloud_cover.toString() || "") +
+            (info?.current.surface_pressure.toString() || "") +
             " " +
-            (info?.current_units.cloud_cover.toString() || "")
+            (info?.current_units.surface_pressure.toString() || "")
           }
         />
       </div>
@@ -78,12 +91,12 @@ function MicroInfo({
   icon,
   value = "",
 }: {
-  icon?: React.ReactNode;
+  icon: RemixiconComponentType;
   value: string;
 }) {
   return (
     <div className="font-semibold flex flex-col items-center gap-2 w-max">
-      {icon}
+      <Icon className="micro-info-icon" icon={icon} />
       {value}
     </div>
   );

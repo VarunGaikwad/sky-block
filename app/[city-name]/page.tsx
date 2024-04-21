@@ -3,6 +3,7 @@
 import onFetchCityWeatherInfo from "@/common/CityWeatherInfo";
 import { CurrentWeather } from "@/common/Interfaces";
 import CityWeatherCard from "@/components/CityWeatherCard";
+import NearByCities from "@/components/NearByCities";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -17,7 +18,8 @@ export default function CityName() {
   return (
     <div className="grid lg:grid-cols-3 gap-4 mt-4">
       <CityWeatherCard info={info} />
-      <div className="lg:col-span-2 bg-slate-400 rounded-lg">
+      <NearByCities city={pathname} />
+      <div className="lg:col-span-1 bg-slate-400 rounded-lg">
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </div>
       <div className="lg:col-span-1 bg-slate-400 rounded-lg">asdas</div>

@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment-timezone";
-import { FindWeatherIconCodes } from "../common/IconDisctonary";
+import { FindWeatherIconCodes } from "../common/IconDictionary";
 import Image from "next/image";
 import { CurrentWeather } from "@/common/Interfaces";
 

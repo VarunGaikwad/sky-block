@@ -36,9 +36,11 @@ export interface CurrentWeather {
     cloud_cover: string;
     precipitation: string;
     is_day: string;
+    surface_pressure: string;
   };
   current: {
     time: number;
+    surface_pressure: number;
     is_day: number;
     interval: number;
     temperature_2m: number;
@@ -62,4 +64,12 @@ export interface CurrentWeather {
     temperature_2m_min: number[];
     weather_code: number[];
   };
+}
+
+export interface CitiesProp {
+  name: string;
+  latitude: number;
+  longitude: number;
+  country: string;
+  population: number;
 }
