@@ -16,6 +16,7 @@ export default function CitySearchInput({ onSearch }: Props) {
     inputRef = useRef<HTMLInputElement>(null),
     formRef = useRef<HTMLFormElement>(null),
     [isInputActive, setInputActive] = useState<boolean>(false),
+    [isInputFocus, setInputFocus] = useState<boolean>(false),
     onCityInputChange = (uiEvent: React.ChangeEvent<HTMLInputElement>) => {
       const value = uiEvent.target.value;
       setCity(value);
@@ -29,8 +30,10 @@ export default function CitySearchInput({ onSearch }: Props) {
     },
     onCityInputFocus = () => {
       setInputActive(true);
+      setInputFocus(true);
     },
     onCityInputBlur = () => {
+      setInputFocus(false);
       if (city.trim() === "") setInputActive(false);
     },
     onFormSubmit = (uiEvent: React.FormEvent<HTMLFormElement>) => {
@@ -72,7 +75,11 @@ export default function CitySearchInput({ onSearch }: Props) {
   }, [pathname]);
 
   return (
-    <form ref={formRef} onSubmit={onFormSubmit} className="relative lg:w-1/3">
+    <form
+      ref={formRef}
+      onSubmit={onFormSubmit}
+      className="relative grid-cols-1"
+    >
       <label
         onClick={onCityLabelFocus}
         htmlFor="city"
@@ -103,8 +110,9 @@ export default function CitySearchInput({ onSearch }: Props) {
           />
         </button>
       </div>
-      <div className="absolute z-10 mt-1 w-full bg-white bg-opacity-30 font-semibold rounded-xl shadow-lg">
+      <div className="absolute z-10 mt-1 w-full bg-white font-semibold rounded-xl shadow-lg">
         {cityNameList.length > 0 &&
+          isInputFocus &&
           cityNameList.map(({ name }, index) => (
             <div
               key={index}

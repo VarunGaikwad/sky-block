@@ -10,5 +10,9 @@ export default function Header() {
     router.push(name);
   };
 
-  return <CitySearchInput onSearch={onSearchHandler} />;
+  return (
+    <div className="lg:grid lg:grid-cols-3">
+      <CitySearchInput onSearch={onSearchHandler} />
+    </div>
+  );
 }
