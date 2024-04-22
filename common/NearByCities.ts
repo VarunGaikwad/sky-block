@@ -19,9 +19,7 @@ export function onFetchNearByCities(city: string) {
       .filter(
         ({ name, country }) =>
           country === current_country?.country && name !== city
-      )
-      .sort((first, second) => -first.population + second.population)
-      .slice(0, 5),
+      ).sort(() => Math.random() - 0.5).slice(0, 5),
     all_request = all_cities.map((element) => onFetch(element));
 
   return Promise.all(all_request);
@@ -29,10 +27,10 @@ export function onFetchNearByCities(city: string) {
 
 async function onFetch(city: Props) {
   const params = {
-      latitude: city?.latitude,
-      longitude: city?.longitude,
-      current: ["weather_code"].toString(),
-    },
+    latitude: city?.latitude,
+    longitude: city?.longitude,
+    current: ["weather_code"].toString(),
+  },
     { data } = await openMeteoAxios.get("v1/forecast", { params });
 
   data.display_name = city?.name;

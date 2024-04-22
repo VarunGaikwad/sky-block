@@ -24,21 +24,22 @@ export default async function onFetchCityWeatherInfo(city: string) {
 
 async function onFetch(city: Props) {
   const params = {
-      latitude: city?.latitude,
-      longitude: city?.longitude,
-      current: [
-        "temperature_2m",
-        "relative_humidity_2m",
-        "is_day",
-        "rain",
-        "weather_code",
-        "wind_speed_10m",
-        "precipitation",
-        "cloud_cover",
-        "surface_pressure",
-      ].toString(),
-      timezone: "auto",
-    },
+    latitude: city?.latitude,
+    longitude: city?.longitude,
+    current: [
+      "temperature_2m",
+      "relative_humidity_2m",
+      "is_day",
+      "rain",
+      "weather_code",
+      "wind_speed_10m",
+      "precipitation",
+      "cloud_cover",
+      "surface_pressure",
+    ].toString(),
+    daily: ["temperature_2m_max", "temperature_2m_min", "weather_code"].toString(),
+    timezone: "auto",
+  },
     { data } = await openMeteoAxios.get("v1/forecast", { params });
 
   data.display_name = city?.name || "";

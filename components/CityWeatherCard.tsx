@@ -9,7 +9,6 @@ import { Icon } from "@tremor/react";
 import {
   RemixiconComponentType,
   RiArrowDownDoubleFill,
-  RiCloudFill,
   RiRainyFill,
   RiWaterPercentFill,
   RiWindyFill,
@@ -28,7 +27,13 @@ export default function CityWeatherCard({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(moment.tz(info?.timezone || "").format("HH:mm a"));
+      setTime(
+        moment
+          .tz(
+            info?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+          )
+          .format("HH:mm a")
+      );
     }, 1000);
 
     return () => clearInterval(interval);
@@ -41,11 +46,11 @@ export default function CityWeatherCard({
       </p>
       <p className="text-sm ml-4">{time}</p>
       <div className="flex justify-between items-center">
-        <Image src={src} alt="Sun" className="size-36" />
+        <Image src={src} alt="Sun" className="size-28" />
         <div className="font-bold flex flex-col items-end">
-          <p className="text-7xl">{info?.current.temperature_2m}&deg;C</p>
+          <p className="text-6xl">{info?.current.temperature_2m}&deg;C</p>
           <p className="text-xs ml-4 mt-2">
-            {WeatherContext[info?.current.weather_code || -1]}
+            {WeatherContext[info?.current.weather_code ?? -1]}
           </p>
         </div>
       </div>
@@ -95,9 +100,9 @@ function MicroInfo({
   value: string;
 }) {
   return (
-    <div className="font-semibold flex flex-col items-center gap-2 w-max">
+    <div className="font-semibold flex flex-col items-center gap-2 w-max text-sm">
       <Icon className="micro-info-icon" icon={icon} />
-      {value}
+      <p>{value}</p>
     </div>
   );
 }

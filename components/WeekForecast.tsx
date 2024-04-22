@@ -1,8 +1,8 @@
 import React from "react";
 import moment from "moment-timezone";
-import { FindWeatherIconCodes } from "../common/IconDictionary";
 import Image from "next/image";
 import { CurrentWeather } from "@/common/Interfaces";
+import { FindWeatherIconCodes } from "@/common/IconDictionary";
 
 export default function WeekForecastCard({
   info,
@@ -18,9 +18,9 @@ export default function WeekForecastCard({
       },
     array = Array(time.length).fill(0);
   return (
-    <div className="lg:col-span-1 bg-white bg-opacity-5 grid-card font-semibold text-sm">
+    <div className="grid-card bg-cyan-950 bg-opacity-80 text-sm text-black">
       <p>Forecast</p>
-      <div className="flex flex-col gap-2 mt-4">
+      <div className="flex flex-col gap-1 mt-2">
         {array.map((_, i) => (
           <DayCast
             key={i}
