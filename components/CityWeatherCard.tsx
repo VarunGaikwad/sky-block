@@ -19,7 +19,7 @@ export default function CityWeatherCard({
 }: {
   info: CurrentWeather | undefined;
 }) {
-  const [time, setTime] = useState(""),
+  const [time, setTime] = useState<string>(),
     src = FindWeatherIconCodes(
       info?.current.weather_code || 0,
       info?.current.is_day ?? 0
@@ -42,11 +42,11 @@ export default function CityWeatherCard({
   return (
     <div className="grid-card bg-indigo-700 bg-opacity-80">
       <p className="font-semibold text-2xl">
-        Good Morning, {info?.display_name}
+        {_getGreeting(time)}, {info?.display_name}
       </p>
       <p className="text-sm ml-4">{time}</p>
       <div className="flex justify-between items-center">
-        <Image src={src} alt="Sun" className="size-28" />
+        <Image priority src={src} alt="Sun" className="size-28" />
         <div className="font-bold flex flex-col items-end">
           <p className="text-6xl">{info?.current.temperature_2m}&deg;C</p>
           <p className="text-xs ml-4 mt-2">
@@ -105,4 +105,13 @@ function MicroInfo({
       <p>{value}</p>
     </div>
   );
+}
+
+function _getGreeting(time: string = "12:25 am"): string {
+  const [hour, minute, period] = time.split(/[: ]/),
+    hour24 = parseInt(hour) + (period.toLowerCase() === "pm" ? 12 : 0);
+
+  if (hour24 < 12) return "Good morning! 🌞";
+  if (hour24 < 18) return "Good afternoon! 😁";
+  else return "Good evening! 🥱";
 }

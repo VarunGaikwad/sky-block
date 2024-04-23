@@ -164,13 +164,13 @@ const WeatherIconCodes: Record<string, number[]> = {
     99: "Heavy thunderstorm with hail",
   };
 
-function FindWeatherIconCodes(code: number, is_day: number = 0): string {
+function FindWeatherIconCodes(code: number, is_day: number = 1): string {
   for (const [key, codes] of Object.entries(WeatherIconCodes)) {
     if (codes.includes(code)) {
       return SVGImage[key][is_day];
     }
   }
-  return SVGImage["sun"][0];
+  return SVGImage["sun"][1];
 }
 
 function FindRemixIconCodes(code: number): [string, RemixiconComponentType] {

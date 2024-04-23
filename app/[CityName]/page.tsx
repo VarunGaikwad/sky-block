@@ -2,6 +2,7 @@
 
 import onFetchCityWeatherInfo from "@/common/CityWeatherInfo";
 import { CurrentWeather } from "@/common/Interfaces";
+import { AreaChartHero } from "@/components/AreaChartHero";
 import CityWeatherCard from "@/components/CityWeatherCard";
 import NearByCities from "@/components/NearByCities";
 import WeekForecastCard from "@/components/WeekForecast";
@@ -24,7 +25,7 @@ export default function CityName() {
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </div>
       <WeekForecastCard info={info} />
-      <div className="lg:col-span-2 bg-slate-900 rounded-lg">asdsa</div>
+      <AreaChartHero info={info} />
     </div>
   );
 }

@@ -64,6 +64,20 @@ export interface CurrentWeather {
     temperature_2m_min: number[];
     weather_code: number[];
   };
+  hourly_units: {
+    time: string;
+    rain: string;
+    temperature_2m: string;
+    wind_speed_10m: string;
+    snow_depth: string;
+  }
+  hourly: {
+    rain: number[];
+    time: string[];
+    temperature_2m: number[];
+    wind_speed_10m: number[];
+    snow_depth: number[];
+  }
 }
 
 export interface CitiesProp {
