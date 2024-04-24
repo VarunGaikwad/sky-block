@@ -32,7 +32,7 @@ export default function CityWeatherCard({
           .tz(
             info?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
           )
-          .format("HH:mm a")
+          .format("hh:mm a")
       );
     }, 1000);
 

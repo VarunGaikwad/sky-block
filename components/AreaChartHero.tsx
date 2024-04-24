@@ -41,7 +41,7 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
     ],
     valueFormat = (value: number) => {
       if (category === "Snow") {
-        return value + (info?.hourly_units.snow_depth || "");
+        return value + (info?.hourly_units.snowfall || "");
       }
       if (category === "Wind") {
         return value + (info?.hourly_units.wind_speed_10m || "");
@@ -57,13 +57,13 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
 
   useEffect(() => {
     setClient(true);
-    const { rain, time, temperature_2m, wind_speed_10m, snow_depth } =
+    const { rain, time, temperature_2m, wind_speed_10m, snowfall } =
         info?.hourly || {
           rain: [],
           time: [],
           temperature_2m: [],
           wind_speed_10m: [],
-          snow_depth: [],
+          snowfall: [],
         },
       formatter = new Intl.DateTimeFormat("en-US", {
         hour: "2-digit",
@@ -74,9 +74,9 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
         Rain: data,
         Temperature: temperature_2m[idx],
         Wind: wind_speed_10m[idx],
-        Snow: snow_depth[idx],
+        Snow: snowfall[idx],
       }));
-    setChartData(chart);
+    setChartData([...chart]);
   }, [info?.hourly]);
 
   return isClient ? (
@@ -95,12 +95,15 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
         ))}
       </div>
       <AreaChart
+        showAnimation
+        showGradient
+        showLegend
         className="mt-2 h-80"
         data={chartData || []}
         index="time"
         categories={[category]}
-        colors={["rose"]}
-        yAxisWidth={35}
+        colors={["indigo"]}
+        yAxisWidth={50}
         valueFormatter={valueFormat}
       />
     </div>

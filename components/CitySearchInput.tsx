@@ -1,4 +1,4 @@
-import cities from "@/common/Cities.json";
+import array from "@/common/Cities.json";
 import { CityList } from "@/common/Interfaces";
 import { RiSearchLine } from "@remixicon/react";
 import { Icon } from "@tremor/react";
@@ -10,7 +10,8 @@ type Props = {
 };
 
 export default function CitySearchInput({ onSearch }: Props) {
-  const [city, setCity] = useState<string>(""),
+  const cities = array as [],
+    [city, setCity] = useState<string>(""),
     pathname = usePathname().slice(1),
     [cityNameList, setCityListName] = useState<CityList[]>([]),
     inputRef = useRef<HTMLInputElement>(null),

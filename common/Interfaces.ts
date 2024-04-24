@@ -69,14 +69,14 @@ export interface CurrentWeather {
     rain: string;
     temperature_2m: string;
     wind_speed_10m: string;
-    snow_depth: string;
+    snowfall: string;
   }
   hourly: {
     rain: number[];
     time: string[];
     temperature_2m: number[];
     wind_speed_10m: number[];
-    snow_depth: number[];
+    snowfall: number[];
   }
 }
 

@@ -37,12 +37,13 @@ async function onFetch(city: Props) {
       "cloud_cover",
       "surface_pressure",
     ].toString(),
-    daily: ["temperature_2m_max", "temperature_2m_min", "weather_code"].toString(),
-    hourly: ["rain", "temperature_2m", "wind_speed_10m", "snow_depth"].toString(),
+    daily: ["temperature_2m_max", "temperature_2m_min", "weather_code", "sunrise", "sunset"].toString(),
+    hourly: ["rain", "temperature_2m", "wind_speed_10m", "snowfall"].toString(),
     timezone: "auto",
   },
     { data } = await openMeteoAxios.get("v1/forecast", { params });
 
   data.display_name = city?.name || "";
+
   return data;
 }
