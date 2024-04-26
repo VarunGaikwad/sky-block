@@ -57,12 +57,16 @@ export interface CurrentWeather {
     temperature_2m_max: string;
     temperature_2m_min: string;
     weather_code: string;
+    sunrise: string;
+    sunset: string;
   };
   daily: {
     time: string[];
     temperature_2m_max: number[];
     temperature_2m_min: number[];
     weather_code: number[];
+    sunrise: string[];
+    sunset: string[];
   };
   hourly_units: {
     time: string;

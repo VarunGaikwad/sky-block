@@ -21,7 +21,7 @@ export default function CityName() {
   return (
     <div className="grid lg:grid-cols-3 gap-4 mt-4">
       <CityWeatherCard info={info} />
-      <DonutChartHero />
+      <DonutChartHero info={info} />
       <NearByCities city={pathname} />
       <WeekForecastCard info={info} />
       <AreaChartHero info={info} />
