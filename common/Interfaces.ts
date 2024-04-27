@@ -37,6 +37,7 @@ export interface CurrentWeather {
     precipitation: string;
     is_day: string;
     surface_pressure: string;
+    wind_direction_10m: string;
   };
   current: {
     time: number;
@@ -51,6 +52,7 @@ export interface CurrentWeather {
     wind_speed_10m: number;
     cloud_cover: number;
     precipitation: number;
+    wind_direction_10m: string;
   };
   daily_units: {
     time: string;
@@ -73,14 +75,12 @@ export interface CurrentWeather {
     rain: string;
     temperature_2m: string;
     wind_speed_10m: string;
-    snowfall: string;
   }
   hourly: {
     rain: number[];
     time: string[];
     temperature_2m: number[];
     wind_speed_10m: number[];
-    snowfall: number[];
   }
 }
 

@@ -6,13 +6,10 @@ import moment from "moment-timezone";
 import { CurrentWeather } from "@/common/Interfaces";
 import { FindWeatherIconCodes, WeatherContext } from "@/common/IconDictionary";
 import { Icon } from "@tremor/react";
-import {
-  RemixiconComponentType,
-  RiArrowDownDoubleFill,
-  RiRainyFill,
-  RiWaterPercentFill,
-  RiWindyFill,
-} from "@remixicon/react";
+import { GiSunrise, GiSunset } from "react-icons/gi";
+import { MdOutlineWindPower, MdWaterDrop } from "react-icons/md";
+import { IoRainy } from "react-icons/io5";
+import { IconType } from "react-icons";
 
 export default function CityWeatherCard({
   info,
@@ -20,98 +17,80 @@ export default function CityWeatherCard({
   info: CurrentWeather | undefined;
 }) {
   const [time, setTime] = useState<string>(),
-    src = FindWeatherIconCodes(
-      info?.current.weather_code || 0,
-      info?.current.is_day ?? 0
-    );
+    src = FindWeatherIconCodes(info?.current.weather_code || 0, info?.current.is_day ?? 0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(
-        moment
-          .tz(
-            info?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
-          )
-          .format("hh:mm a")
-      );
+      setTime(moment.tz(info?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone).format("hh:mm a"));
     }, 1000);
 
     return () => clearInterval(interval);
   }, [info?.timezone]);
 
   return (
-    <div className="grid-card bg-indigo-700 bg-opacity-80">
-      <p className="font-semibold text-2xl">
-        {_getGreeting(time)}, {info?.display_name}
+    <div className="grid-card lg:col-span-1 bg-indigo-600 flex flex-col">
+      <p className="card-header flex items-center">
+        {_GreetingOfTheDay(moment.tz(info?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone).format("HH:mm"))}
+        <span className="text-lg ml-auto">{info?.display_name}</span>
       </p>
-      <p className="text-sm ml-4">{time}</p>
+      <p className="text-lg ml-4 tracking-wider">{time}</p>
       <div className="flex justify-between items-center">
         <Image priority src={src} alt="Sun" className="size-28" />
         <div className="font-bold flex flex-col items-end">
           <p className="text-6xl">{info?.current.temperature_2m}&deg;C</p>
-          <p className="text-xs ml-4 mt-2">
+          <p className="text-lg ml-4 mt-2">
             {WeatherContext[info?.current.weather_code ?? -1]}
           </p>
         </div>
       </div>
-      <div className="flex justify-between px-4 my-2">
+      <div className="flex-1 grid grid-cols-3">
         <MicroInfo
-          icon={RiWaterPercentFill}
-          value={
-            (info?.current.relative_humidity_2m.toString() || "") +
-            " " +
-            (info?.current_units.relative_humidity_2m.toString() || "")
-          }
+          icon={GiSunrise}
+          value={moment(info?.daily.sunrise[0] || new Date()).format("hh:mm a")}
         />
         <MicroInfo
-          icon={RiRainyFill}
-          value={
-            (info?.current.rain.toString() || "") +
-            " " +
-            (info?.current_units.rain.toString() || "")
-          }
+          icon={MdWaterDrop}
+          value={(info?.current.relative_humidity_2m.toString() || "") + " " + (info?.current_units.relative_humidity_2m.toString() || "")}
         />
         <MicroInfo
-          icon={RiWindyFill}
-          value={
-            (info?.current.wind_speed_10m.toString() || "") +
-            " " +
-            (info?.current_units.wind_speed_10m.toString() || "")
-          }
+          icon={IoRainy}
+          value={(info?.current.rain.toString() || "") + " " + (info?.current_units.rain.toString() || "")}
         />
         <MicroInfo
-          icon={RiArrowDownDoubleFill}
-          value={
-            (info?.current.surface_pressure.toString() || "") +
-            " " +
-            (info?.current_units.surface_pressure.toString() || "")
-          }
+          icon={MdOutlineWindPower}
+          value={(info?.current.wind_speed_10m.toString() || "") + " " + (info?.current_units.wind_speed_10m.toString() || "")}
+        />
+        <MicroInfo
+          icon={GiSunset}
+          value={moment(info?.daily.sunset[0] || new Date()).format("hh:mm a")}
         />
       </div>
     </div>
   );
 }
 
-function MicroInfo({
-  icon,
-  value = "",
-}: {
-  icon: RemixiconComponentType;
+function MicroInfo({ icon, value = "" }: {
+  icon: IconType;
   value: string;
 }) {
   return (
-    <div className="font-semibold flex flex-col items-center gap-2 w-max text-sm">
+    <div className="font-semibold flex flex-col items-center gap-2 justify-center col-span-1">
       <Icon className="micro-info-icon" icon={icon} />
       <p>{value}</p>
     </div>
   );
 }
 
-function _getGreeting(time: string = "12:25 am"): string {
-  const [hour, minute, period] = time.split(/[: ]/),
-    hour24 = parseInt(hour) + (period.toLowerCase() === "pm" ? 12 : 0);
+function _GreetingOfTheDay(time: string = "10:00"): string {
+  const hour = Number(time.slice(0, 2));
 
-  if (hour24 < 12) return "Good morning! 🌞";
-  if (hour24 < 18) return "Good afternoon! 😁";
-  else return "Good evening! 🥱";
+  if (hour >= 5 && hour < 12) {
+    return "Good morning! 🌞";
+  }
+
+  if (hour >= 12 && hour < 18) {
+    return "Good afternoon! 😁";
+  }
+
+  return "Good evening! 🥱";
 }

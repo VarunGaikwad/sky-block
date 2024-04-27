@@ -4,7 +4,6 @@ import onFetchCityWeatherInfo from "@/common/CityWeatherInfo";
 import { CurrentWeather } from "@/common/Interfaces";
 import { AreaChartHero } from "@/components/AreaChartHero";
 import CityWeatherCard from "@/components/CityWeatherCard";
-import DonutChartHero from "@/components/DonutChartHero";
 import NearByCities from "@/components/NearByCities";
 import WeekForecastCard from "@/components/WeekForecast";
 import { usePathname } from "next/navigation";
@@ -19,9 +18,8 @@ export default function CityName() {
   }, [pathname]);
 
   return (
-    <div className="grid lg:grid-cols-3 gap-4 mt-4">
+    <div className="grid lg:grid-cols-3 gap-4 mt-4 select-none">
       <CityWeatherCard info={info} />
-      <DonutChartHero info={info} />
       <NearByCities city={pathname} />
       <WeekForecastCard info={info} />
       <AreaChartHero info={info} />

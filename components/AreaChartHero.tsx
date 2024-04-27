@@ -34,15 +34,10 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
         name: "Wind",
         icon: RiWindyFill,
       },
-      {
-        name: "Snow",
-        icon: RiSnowflakeFill,
-      },
+
     ],
     valueFormat = (value: number) => {
-      if (category === "Snow") {
-        return value + (info?.hourly_units.snowfall || "");
-      }
+
       if (category === "Wind") {
         return value + (info?.hourly_units.wind_speed_10m || "");
       }
@@ -57,14 +52,13 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
 
   useEffect(() => {
     setClient(true);
-    const { rain, time, temperature_2m, wind_speed_10m, snowfall } =
-        info?.hourly || {
-          rain: [],
-          time: [],
-          temperature_2m: [],
-          wind_speed_10m: [],
-          snowfall: [],
-        },
+    const { rain, time, temperature_2m, wind_speed_10m, } =
+      info?.hourly || {
+        rain: [],
+        time: [],
+        temperature_2m: [],
+        wind_speed_10m: [],
+      },
       formatter = new Intl.DateTimeFormat("en-US", {
         hour: "2-digit",
         minute: "2-digit",
@@ -74,13 +68,12 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
         Rain: data,
         Temperature: temperature_2m[idx],
         Wind: wind_speed_10m[idx],
-        Snow: snowfall[idx],
       }));
     setChartData([...chart]);
   }, [info?.hourly]);
 
   return isClient ? (
-    <div className="lg:col-span-2 bg-slate-900 rounded-lg p-4">
+    <div className="grid-card lg:col-span-3 bg-slate-900">
       <div className="flex justify-end gap-4">
         {chartType.map(({ name, icon }, idx) => (
           <Button
@@ -103,7 +96,7 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
         index="time"
         categories={[category]}
         colors={["indigo"]}
-        yAxisWidth={50}
+        yAxisWidth={60}
         valueFormatter={valueFormat}
       />
     </div>
