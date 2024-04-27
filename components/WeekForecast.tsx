@@ -18,7 +18,7 @@ export default function WeekForecastCard({
     },
     array = Array(time.length).fill(0);
   return (
-    <div className="grid-card bg-cyan-800">
+    <div className={`grid-card bg-cyan-800 transition-all duration-1000 ease-in ${Object.keys(info || {}).length ? 'blur-0' : 'blur-md'}`}>
       <p className="card-header">7-day forecast</p>
       <div className="flex flex-col justify-evenly text-sm lg:text-base">
         {array.map((_, i) => (

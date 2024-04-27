@@ -73,7 +73,7 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
   }, [info?.hourly]);
 
   return isClient ? (
-    <div className="grid-card lg:col-span-3 bg-slate-900">
+    <div className={`grid-card lg:col-span-3 bg-slate-900 transition-all duration-1000 ease-in ${Object.keys(info || {}).length ? 'blur-0' : 'blur-md'}`}>
       <div className="flex justify-end gap-4">
         {chartType.map(({ name, icon }, idx) => (
           <Button
@@ -101,7 +101,7 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
       />
     </div>
   ) : (
-    <div className="lg:col-span-2 bg-slate-900 rounded-lg text-white font-semibold flex justify-center items-center">
+    <div className={`grid-card lg:col-span-3 bg-slate-900 transition-all duration-1000 ease-in ${Object.keys(info || {}).length ? 'blur-0' : 'blur-md'}`}>
       Loading......
     </div>
   );

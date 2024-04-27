@@ -17,23 +17,24 @@ export default function CityWeatherCard({
   info: CurrentWeather | undefined;
 }) {
   const [time, setTime] = useState<string>(),
-    src = FindWeatherIconCodes(info?.current.weather_code || 0, info?.current.is_day ?? 0);
+    src = FindWeatherIconCodes(info?.current.weather_code || 0, info?.current.is_day ?? 0),
+    currentDate = new Date().toISOString();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(moment.tz(info?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone).format("hh:mm a"));
+      setTime(moment.tz(info?.timezone || "Asia/Mumbai").format("hh:mm a"));
     }, 1000);
 
     return () => clearInterval(interval);
   }, [info?.timezone]);
 
   return (
-    <div className="grid-card lg:col-span-1 bg-indigo-600 flex flex-col">
+    <div className={`grid-card lg:col-span-1 bg-indigo-600 flex flex-col transition-all duration-1000 ease-in ${Object.keys(info || {}).length ? 'blur-0' : 'blur-md'}`}>
       <p className="card-header flex items-center">
-        {_GreetingOfTheDay(moment.tz(info?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone).format("HH:mm"))}
-        <span className="text-lg ml-auto">{info?.display_name}</span>
+        {_GreetingOfTheDay(info?.timezone ? moment.tz(info?.timezone).format("HH:mm") : moment.tz("Asia/Mumbai").format("HH:mm"))}
+        <span className="text-lg ml-auto">{info?.display_name || "Paris"}</span>
       </p>
-      <p className="text-lg ml-4 tracking-wider">{time}</p>
+      <p className="text-lg ml-4 tracking-wider">{time || "00:00"}</p>
       <div className="flex justify-between items-center">
         <Image priority src={src} alt="Sun" className="size-28" />
         <div className="font-bold flex flex-col items-end">
@@ -46,7 +47,7 @@ export default function CityWeatherCard({
       <div className="flex-1 grid grid-cols-3">
         <MicroInfo
           icon={GiSunrise}
-          value={moment(info?.daily.sunrise[0] || new Date()).format("hh:mm a")}
+          value={info?.daily.sunrise[0] ? moment(info?.daily.sunrise[0]).format("hh:mm a") : moment(currentDate).format("hh:mm a")}
         />
         <MicroInfo
           icon={MdWaterDrop}
@@ -62,7 +63,7 @@ export default function CityWeatherCard({
         />
         <MicroInfo
           icon={GiSunset}
-          value={moment(info?.daily.sunset[0] || new Date()).format("hh:mm a")}
+          value={info?.daily.sunset[0] ? moment(info?.daily.sunset[0]).format("hh:mm a") : moment(currentDate).format("hh:mm a")}
         />
       </div>
     </div>

@@ -12,7 +12,7 @@ export default function NearByCities({ city }: { city: string }) {
   }, [city]);
 
   return (
-    <div className="grid-card lg:col-span-1 bg-blue-700 flex flex-col">
+    <div className={`grid-card lg:col-span-1 bg-blue-700 flex flex-col transition-all duration-1000 ease-in ${Object.keys(popularCities || {}).length ? 'blur-0' : 'blur-md'}`}>
       <p className="card-header">Popular Cities</p>
       <div className="flex-1 flex justify-evenly flex-col">
         {popularCities.map(
