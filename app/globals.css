@@ -28,8 +28,13 @@
 
 .micro-info-icon > svg {
   fill: snow !important;
+  @apply size-6;
 }
 
 .grid-card {
-  @apply lg:col-span-1 rounded-xl text-white p-5 shadow-2xl font-semibold;
+  @apply rounded-xl text-white p-5 shadow-2xl font-semibold;
+}
+
+.card-header {
+  @apply font-semibold lg:text-2xl text-lg;
 }

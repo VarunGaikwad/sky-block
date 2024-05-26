@@ -15,11 +15,7 @@ type Props = {
 export function onFetchNearByCities(city: string) {
   const cities: CitiesProp[] = dictonary as CitiesProp[],
     current_country = cities.find(({ name }) => name === city),
-    all_cities = cities
-      .filter(
-        ({ name, country }) =>
-          country === current_country?.country && name !== city
-      ).sort(() => Math.random() - 0.5).slice(0, 5),
+    all_cities = cities.filter(({ name, country }) => country === current_country?.country && name !== city).slice(0, 5),
     all_request = all_cities.map((element) => onFetch(element));
 
   return Promise.all(all_request);

@@ -46,9 +46,9 @@ export default function CitySearchInput({ onSearch }: Props) {
     },
     onOptionTab = (event: React.KeyboardEvent<HTMLDivElement>) => {
       const {
-          key,
-          currentTarget: { innerHTML },
-        } = event,
+        key,
+        currentTarget: { innerHTML },
+      } = event,
         { current } = formRef;
       if (key === "Enter" && innerHTML !== "") {
         setCity(innerHTML);
@@ -58,8 +58,8 @@ export default function CitySearchInput({ onSearch }: Props) {
     },
     onOptionClick = (event: React.MouseEvent<HTMLDivElement>) => {
       const {
-          currentTarget: { innerHTML },
-        } = event,
+        currentTarget: { innerHTML },
+      } = event,
         { current } = formRef;
       if (innerHTML !== "") {
         setCity(innerHTML);
@@ -84,9 +84,8 @@ export default function CitySearchInput({ onSearch }: Props) {
       <label
         onClick={onCityLabelFocus}
         htmlFor="city"
-        className={`ml-6 font-semibold absolute top-4 transition-all duration-300 cursor-text ${
-          isInputActive ? "-translate-y-10" : "translate-y-0 opacity-50"
-        }`}
+        className={`ml-6 font-semibold absolute top-4 transition-all duration-300 cursor-text ${isInputActive ? "-translate-y-10" : "translate-y-0 opacity-50"
+          }`}
       >
         Enter City Name
       </label>
@@ -113,7 +112,6 @@ export default function CitySearchInput({ onSearch }: Props) {
       </div>
       <div className="absolute z-10 mt-1 w-full bg-white font-semibold rounded-xl shadow-lg">
         {cityNameList.length > 0 &&
-          isInputFocus &&
           cityNameList.map(({ name }, index) => (
             <div
               key={index}

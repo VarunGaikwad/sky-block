@@ -1,14 +1,6 @@
 import { FindRemixIconCodes } from "@/common/IconDictionary";
 import { CurrentWeather } from "@/common/Interfaces";
 import { onFetchNearByCities } from "@/common/NearByCities";
-import {
-  RiCloudFill,
-  RiRainyFill,
-  RiSnowyFill,
-  RiSunFill,
-  RiThunderstormsFill,
-  RiWindyFill,
-} from "@remixicon/react";
 import { Icon } from "@tremor/react";
 import React, { useEffect, useState } from "react";
 
@@ -20,9 +12,9 @@ export default function NearByCities({ city }: { city: string }) {
   }, [city]);
 
   return (
-    <div className="grid-card bg-blue-600 flex flex-col">
-      <p className="text-xl">Popular Cities</p>
-      <div className="mt-6 flex-1 flex justify-evenly flex-col text-sm">
+    <div className={`grid-card lg:col-span-1 bg-blue-700 flex flex-col transition-all duration-1000 ease-in ${Object.keys(popularCities || {}).length ? 'blur-0' : 'blur-md'}`}>
+      <p className="card-header">Popular Cities</p>
+      <div className="flex-1 flex justify-evenly flex-col">
         {popularCities.map(
           ({ display_name, current: { weather_code } }, idx) => (
             <PopularCity
