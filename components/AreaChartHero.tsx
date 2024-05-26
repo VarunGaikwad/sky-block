@@ -69,7 +69,7 @@ export function AreaChartHero({ info }: { info: CurrentWeather | undefined }) {
         hour: "2-digit",
         minute: "2-digit",
       }),
-      chart = rain.slice(0, 23).map((data: number, idx: number) => ({
+      chart = rain.slice(0, 47).map((data: number, idx: number) => ({
         time: formatter.format(new Date(time[idx])),
         Rain: data,
         Temperature: temperature_2m[idx],
