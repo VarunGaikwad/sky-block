@@ -35,7 +35,7 @@ For example, to see the weather information for Tokyo, you can directly navigate
 
 1. **Homepage**: On the homepage, you will find a search bar where you can enter the name of the city you want to check the weather for.
    
-   ![SkyCast Homepage](URL-to-screenshot)
+   ![SkyCast Homepage](https://raw.githubusercontent.com/VarunGaikwad/sky-cast/main/screenshots/landingpage.png)
 
 2. **Search Results**: After entering a city name, the app will display the current weather information for that city, including:
    - Temperature
@@ -43,7 +43,7 @@ For example, to see the weather information for Tokyo, you can directly navigate
    - Humidity level
    - Wind speed
    
-   ![Search Results Example](URL-to-screenshot)
+   ![Search Results Example](https://raw.githubusercontent.com/VarunGaikwad/sky-cast/main/screenshots/weatherpage.png)
 
 ## Technologies Used
 
