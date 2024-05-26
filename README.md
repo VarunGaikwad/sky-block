@@ -49,7 +49,7 @@ For example, to see the weather information for Tokyo, you can directly navigate
 
 - **Frontend**: React.js for building the user interface.
 - **Backend**: Node.js for server-side logic.
-- **API**: Weather data is fetched from [Open-Meteo](https://api.open-meteo.com/).
+- **API**: Weather data is fetched from [Open-Meteo](https://open-meteo.com/).
 - **Hosting**: Vercel for seamless deployment and hosting.
 
 ## Contributing
@@ -64,7 +64,7 @@ We welcome contributions from the community. To contribute to SkyCast, please fo
 
 ## License
 
-SkyCast is licensed under the MIT License. See the [LICENSE](URL-to-license-file) file for more details.
+SkyCast is licensed under the MIT License. See the LICENSE file for more details.
 
 ## Contact
 
